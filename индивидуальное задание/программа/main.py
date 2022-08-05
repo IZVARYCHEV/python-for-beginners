@@ -43,3 +43,27 @@ for dir in Directory:
     for i in range(len(new_list)):
         if new_list[i] != 'sh_us':
             W.append(new_list[i])
+    # цикл перечисляет файлы в подкаталогах из списка W, открывает их, считывает в переменную
+    # result и далее уже "парсер" через библиотеку BeatifulSoup, извлекает разметку,
+    # разделяет ее на строки и согласно ключевому индивидуальному заданию
+    # (вывести список файлов в которых упоминается заданное выражение)  производит поиск
+    # перечисляемых в цикле файлах
+    #
+    # далее результат передается в строковую переменную v, построчно, с дозаписываением файла
+    # (режим записи 'a') методом out производится заполнение файла по указанному пути.
+
+    for htmlfiles in W:
+        f = open(htmlfiles, 'r')
+        result = f.read()
+        soup = BeautifulSoup(result, 'lxml')
+        strings = soup.find_all(string=re.compile('Windows 7'))
+        v = ''
+        for txt in strings:
+            # это строки вывод строк, в каких именно встречается указанное в re.compile
+            # print(" ".join(txt.split()))
+            # это вывод названия файлов в которых упоминается заданное выражения
+            v = htmlfiles
+        # запись в файл
+        with open('//106-dc01//aida//Sbor//test//output.txt', 'a') as out:
+            print(v, file=out)
+        print(v)
